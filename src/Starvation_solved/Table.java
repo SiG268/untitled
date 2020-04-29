@@ -1,0 +1,19 @@
+package Starvation_solved;
+
+import java.util.ArrayList;
+
+public class Table {
+    public ArrayList<String> items = new ArrayList<String>();
+
+    public String getItem() {
+        String item = items.get(0);
+        items.remove(item);
+        return item;
+    }
+
+    public void putItem(String item) {
+        items.add(item);
+    }
+
+
+}
