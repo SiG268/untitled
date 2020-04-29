@@ -9,8 +9,8 @@ public class Raucher extends Thread {
 
     public boolean validateItems() {
         //Solved (removed semaphore from items)
-        System.out.println("Dead.Raucher"+threadID+" darf ein Item nehmen");
         item = table.getItem(); //Irgend ein Item was auf dem Tisch liegt
+        System.out.println("Raucher"+threadID+" nimmt sich: "+ item);
         if (item != null) {
             if (item.equals(myItem)) {
                 if(itemPuffer!=null){
@@ -20,10 +20,9 @@ public class Raucher extends Thread {
                     itemPuffer=null;
 
                 }
-                //Solved (removed semaphore from items)
                 table.putItem(item); //Legt Item auf den Tisch
                 System.out.println("Dead.Raucher"+threadID+" legt ein Item zurück");
-
+                //Solved (removed semaphore from items)
                 item=null;
                 return false;
             } else {
@@ -53,7 +52,7 @@ public class Raucher extends Thread {
         System.out.println("Dead.Raucher "+threadID+" faengt an zu rauchen");
         DeadSolvedMain.s.release();
         try {
-            this.sleep(10000);
+            this.sleep(10000);  //Delay erhöht für erkentlichkeit
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -63,7 +62,7 @@ public class Raucher extends Thread {
     @Override
     public void run() {
         while(true){
-            System.out.println("Dead.Raucher"+threadID+" will Items");
+            System.out.println("Dead.Raucher"+threadID+" will Items"); //Sysout hierher bewegt
             try {
                 //Solved
                 DeadSolvedMain.itemsOnTable.acquire();
@@ -71,13 +70,12 @@ public class Raucher extends Thread {
                 e.printStackTrace();
             }
             if(validateItems()) {
-               rauchen();
+                rauchen();
            }
             //Solved
             else {
                 DeadSolvedMain.itemsOnTable.release();
             }
         }
-
     }
 }

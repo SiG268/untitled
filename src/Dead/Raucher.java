@@ -14,8 +14,8 @@ public class Raucher extends Thread {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        System.out.println("Dead.Raucher"+threadID+" darf ein Item nehmen");
         item = table.getItem(); //Irgend ein Item was auf dem Tisch liegt
+        System.out.println("Raucher"+threadID+" nimmt sich: "+ item);
         if (item != null) {
             if (item.equals(myItem)) {
                 if(itemPuffer!=null){
@@ -66,10 +66,14 @@ public class Raucher extends Thread {
     @Override
     public void run() {
         while(true){
-           if(validateItems()) {
-               rauchen();
+            try {
+                this.sleep(100);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            if(validateItems()) {
+                rauchen();
            }
         }
-
     }
 }

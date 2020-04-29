@@ -31,6 +31,7 @@ public class Dealer extends Thread{
         DeadMain.itemsOnTable.release();
         table.putItem(item2);
         DeadMain.itemsOnTable.release();
+        //Removed not nececary
 
 
     }

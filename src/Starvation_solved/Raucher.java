@@ -6,25 +6,22 @@ public class Raucher extends Thread {
     Table table=null;
     String myItem = null;
     int threadID;
-    int counter;
+    int counter; //solved
 
     public boolean validateItems() {
-
-        System.out.println("Dead.Raucher"+threadID+" darf ein Item nehmen");
         item = table.getItem(); //Irgend ein Item was auf dem Tisch liegt
+        System.out.println("Raucher"+threadID+" nimmt sich: "+ item);
         if (item != null) {
             if (item.equals(myItem)) {
                 if(itemPuffer!=null){
                     table.putItem(itemPuffer);
                     System.out.println("Dead.Raucher"+threadID+" legt ein Item zurück");
-
                     itemPuffer=null;
 
                 }
                 table.putItem(item); //Legt Item auf den Tisch
                 System.out.println("Dead.Raucher"+threadID+" legt ein Item zurück");
                 item=null;
-
                 return false;
             } else {
                 if (itemPuffer == null) {
@@ -44,12 +41,12 @@ public class Raucher extends Thread {
         this.table=table;
         this.myItem=myItem;
         this.threadID=threadID;
-        counter=0;
+        counter=0;  //solved
 
     }
 
     public void rauchen() {
-        counter=0;
+        counter=0;  //solved
         item=null;
         itemPuffer=null;
         System.out.println("Dead.Raucher "+threadID+" faengt an zu rauchen");
@@ -83,11 +80,11 @@ public class Raucher extends Thread {
                     itemPuffer=null;
                     StarvationSolvedMain.s.release();
                 }
+                //Solved
                 else {
                     StarvationSolvedMain.itemsOnTable.release();
                 }
             }
         }
-
     }
 }
