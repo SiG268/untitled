@@ -2,11 +2,6 @@ package LeserSchreiber.RaceCondition;
 
 public class Schreiber extends Thread{
     int count = 0;
-    int adress = 0;
-
-    public Schreiber() {
-
-    }
 
     @Override
     public void run() {
@@ -21,7 +16,10 @@ public class Schreiber extends Thread{
     }
 
     private void schreiben() throws InterruptedException {
-        this.sleep(100);
-        System.out.println(count);
+        this.sleep(10);
+        Datei d = RaceCondition.DS.getDatei("/root/users/user1/desktop/datei1");
+        String s = "Hallo "+count;
+        System.out.println("Schreiber schreibt: "+s);
+        d.write(s);
     }
 }

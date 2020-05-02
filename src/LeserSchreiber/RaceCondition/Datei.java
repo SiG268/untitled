@@ -1,15 +1,25 @@
 package LeserSchreiber.RaceCondition;
 
+import java.util.ArrayList;
+
 public class Datei {
     String dateiName;
-    StringBuffer inhalt;
+    ArrayList<String> inhalt = new ArrayList<>();
 
     public Datei(String dateiName) {
         this.dateiName = dateiName;
     }
 
-    @Override
-    public String toString() {
-        return dateiName+ "\nInhalt = { "+inhalt+" }";
+
+    public String read(){
+        String text ="";
+        if(inhalt.size()>0) {
+             text = inhalt.get(inhalt.size() - 1);    //Lese letzten String
+        }
+        return text;
+    }
+
+    public void write(String s){
+       inhalt.add(s);
     }
 }

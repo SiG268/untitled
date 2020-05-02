@@ -10,6 +10,11 @@ public class RaceCondition {
 
         //Datei datei = new Datei(1);
         DS.create("/root/users/user1/desktop/", "datei1");
-        System.out.println(DS.getDatei("/root/users/user1/desktop/datei1"));
+
+        Leser l = new Leser();
+        Schreiber s = new Schreiber();
+        s.start();
+        l.start();
+
     }
 }
