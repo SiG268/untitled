@@ -19,7 +19,9 @@ public class Schreiber extends Thread{
     }
 
     private void schreiben() throws InterruptedException {
-        //this.sleep(100);
+        this.sleep(10);
+        System.out.println("Schreiber"+this.id+" will schreiben");
+        //DeadSolved.mut_arbeite.acquire();
 
         DeadSolved.sem_Schreiber.acquire();
         DeadSolved.mut_wc.acquire();
@@ -28,7 +30,6 @@ public class Schreiber extends Thread{
             DeadSolved.sem_Leser.acquire();
         }
         DeadSolved.mut_wc.release();
-
         Datei d = DeadSolved.DS.getDatei("/root/users/user1/desktop/datei1");
         System.out.println("Schreiber"+this.id+" schreibt:"+ DeadSolved.count);
         d.write(DeadSolved.count);
@@ -40,5 +41,6 @@ public class Schreiber extends Thread{
         }
         DeadSolved.mut_wc.release();
         DeadSolved.sem_Schreiber.release();
+        //DeadSolved.mut_arbeite.release();
     }
 }
