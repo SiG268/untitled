@@ -5,7 +5,7 @@ public class Leser extends Thread {
     public Leser() {
     }
     private void lesen() throws InterruptedException {
-        this.sleep(100);
+        //this.sleep(1000);
         RaceConditionSolved.mut_arbeiten.acquire();
         RaceConditionSolved.read_count++;
         if(RaceConditionSolved.read_count == 1){
@@ -14,7 +14,9 @@ public class Leser extends Thread {
         RaceConditionSolved.mut_arbeiten.release();
         Datei d = RaceConditionSolved.DS.getDatei("/root/users/user1/desktop/datei1");
         System.out.println("Leser liest: "+d.read());
+        //this.sleep(1000);
         RaceConditionSolved.mut_arbeiten.acquire();
+        RaceConditionSolved.read_count--;
         if(RaceConditionSolved.read_count == 0){
             RaceConditionSolved.sem_Schreiber.release();
         }

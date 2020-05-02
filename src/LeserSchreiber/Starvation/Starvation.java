@@ -1,8 +1,8 @@
-package LeserSchreiber.RaceConditionSolved;
+package LeserSchreiber.Starvation;
 
 import java.util.concurrent.Semaphore;
 
-public class RaceConditionSolved {
+public class Starvation {
     public static Semaphore sem_Schreiber = new Semaphore(1);
     public static Semaphore mut_arbeiten = new Semaphore(1);
     public static final DateiSystem DS = new DateiSystem();
