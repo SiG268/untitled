@@ -1,4 +1,4 @@
-package RaceCondition;
+package Raucherproblem.Starvation_solved;
 
 import java.util.ArrayList;
 

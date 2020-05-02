@@ -1,4 +1,4 @@
-package Dead;
+package Raucherproblem.RaceCondition;
 
 public class Raucher extends Thread {
     String item=null;
@@ -8,26 +8,18 @@ public class Raucher extends Thread {
     int threadID;
 
     public boolean validateItems() {
-        System.out.println("Dead.Raucher"+threadID+" will ein Item");
-        try {
-            DeadMain.itemsOnTable.acquire();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
         item = table.getItem(); //Irgend ein Item was auf dem Tisch liegt
         System.out.println("Raucher"+threadID+" nimmt sich: "+ item);
         if (item != null) {
             if (item.equals(myItem)) {
                 if(itemPuffer!=null){
                     table.putItem(itemPuffer);
-                    System.out.println("Dead.Raucher"+threadID+" legt ein Item zurück");
-                    DeadMain.itemsOnTable.release();
+                    System.out.println("Raucherproblem.Dead.Raucher"+threadID+" legt ein Item zurück");
                     itemPuffer=null;
 
                 }
                 table.putItem(item); //Legt Item auf den Tisch
-                System.out.println("Dead.Raucher"+threadID+" legt ein Item zurück");
-                DeadMain.itemsOnTable.release();
+                System.out.println("Raucherproblem.Dead.Raucher"+threadID+" legt ein Item zurück");
                 item=null;
                 return false;
             } else {
@@ -53,14 +45,14 @@ public class Raucher extends Thread {
     public void rauchen() {
         item=null;
         itemPuffer=null;
-        System.out.println("Dead.Raucher "+threadID+" faengt an zu rauchen");
+        System.out.println("Raucherproblem.Dead.Raucher "+threadID+" faengt an zu rauchen");
         DeadMain.s.release();
         try {
             this.sleep(100);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        System.out.println("Dead.Raucher "+threadID+" hoert auf zu rauchen");
+        System.out.println("Raucherproblem.Dead.Raucher "+threadID+" hoert auf zu rauchen");
     }
 
     @Override
@@ -72,8 +64,9 @@ public class Raucher extends Thread {
                 e.printStackTrace();
             }
             if(validateItems()) {
-                rauchen();
+               rauchen();
            }
         }
+
     }
 }

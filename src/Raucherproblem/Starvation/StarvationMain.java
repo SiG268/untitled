@@ -1,4 +1,4 @@
-package Starvation;
+package Raucherproblem.Starvation;
 
 import java.util.concurrent.Semaphore;
 

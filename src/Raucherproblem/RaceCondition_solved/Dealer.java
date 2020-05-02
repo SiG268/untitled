@@ -1,4 +1,4 @@
-package Dead;
+package Raucherproblem.RaceCondition_solved;
 
 public class Dealer extends Thread{
     Table table=null;
@@ -26,12 +26,12 @@ public class Dealer extends Thread{
 
     public void putItemsOnTable(){
         randomItem();
-        System.out.println("Dead.Dealer dealt: "+item1+", "+item2);
+        System.out.println("Raucherproblem.Dead.Dealer dealt: "+item1+", "+item2);
         table.putItem(item1);
-        DeadMain.itemsOnTable.release();
+        DeadMain.itemsOnTable.release(); //Solved
         table.putItem(item2);
-        DeadMain.itemsOnTable.release();
-        //Removed not nececary
+        DeadMain.itemsOnTable.release(); //Solved
+        System.out.println("TableSize: "+table.items.size());
 
 
     }

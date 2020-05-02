@@ -1,8 +1,8 @@
-package Dead_solved;
+package Raucherproblem.Dead;
 
 import java.util.concurrent.Semaphore;
 
-public class DeadSolvedMain {
+public class DeadMain {
 
     public static Semaphore s = new Semaphore(1);
     public static Semaphore itemsOnTable = new Semaphore(0);

@@ -1,4 +1,4 @@
-package Starvation;
+package Raucherproblem.Dead;
 
 import java.util.ArrayList;
 

@@ -1,4 +1,4 @@
-package RaceCondition;
+package Raucherproblem.RaceCondition;
 
 import java.util.concurrent.Semaphore;
 

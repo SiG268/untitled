@@ -1,4 +1,4 @@
-package RaceCondition_solved;
+package Raucherproblem.RaceCondition_solved;
 
 public class Raucher extends Thread {
     String item=null;
@@ -8,7 +8,7 @@ public class Raucher extends Thread {
     int threadID;
 
     public boolean validateItems() {
-        System.out.println("Dead.Raucher"+threadID+" will ein Item");   //
+        System.out.println("Raucherproblem.Dead.Raucher"+threadID+" will ein Item");   //
         try {                                                           //
             DeadMain.itemsOnTable.acquire();                            //  Solved
         } catch (InterruptedException e) {                              //
@@ -20,13 +20,13 @@ public class Raucher extends Thread {
             if (item.equals(myItem)) {
                 if(itemPuffer!=null){
                     table.putItem(itemPuffer);
-                    System.out.println("Dead.Raucher"+threadID+" legt ein Item zurück");
+                    System.out.println("Raucherproblem.Dead.Raucher"+threadID+" legt ein Item zurück");
                     DeadMain.itemsOnTable.release();                    //Solved
                     itemPuffer=null;
 
                 }
                 table.putItem(item); //Legt Item auf den Tisch
-                System.out.println("Dead.Raucher"+threadID+" legt ein Item zurück");
+                System.out.println("Raucherproblem.Dead.Raucher"+threadID+" legt ein Item zurück");
                 DeadMain.itemsOnTable.release();                        //Solved
                 item=null;
                 return false;
@@ -53,14 +53,14 @@ public class Raucher extends Thread {
     public void rauchen() {
         item=null;
         itemPuffer=null;
-        System.out.println("Dead.Raucher "+threadID+" faengt an zu rauchen");
+        System.out.println("Raucherproblem.Dead.Raucher "+threadID+" faengt an zu rauchen");
         DeadMain.s.release();
         try {
             this.sleep(100);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        System.out.println("Dead.Raucher "+threadID+" hoert auf zu rauchen");
+        System.out.println("Raucherproblem.Dead.Raucher "+threadID+" hoert auf zu rauchen");
     }
 
     @Override

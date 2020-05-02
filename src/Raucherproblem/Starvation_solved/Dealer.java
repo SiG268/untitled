@@ -1,4 +1,4 @@
-package Starvation_solved;
+package Raucherproblem.Starvation_solved;
 
 public class Dealer extends Thread{
     Table table=null;
@@ -26,7 +26,7 @@ public class Dealer extends Thread{
 
     public void putItemsOnTable(){
         randomItem();
-        System.out.println("Dead.Dealer dealt: "+item1+", "+item2);
+        System.out.println("Raucherproblem.Dead.Dealer dealt: "+item1+", "+item2);
         table.putItem(item1);
         table.putItem(item2);
         StarvationSolvedMain.itemsOnTable.release();

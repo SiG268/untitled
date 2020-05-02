@@ -1,4 +1,4 @@
-package Starvation_solved;
+package Raucherproblem.Starvation;
 
 public class Raucher extends Thread {
     String item=null;
@@ -6,7 +6,6 @@ public class Raucher extends Thread {
     Table table=null;
     String myItem = null;
     int threadID;
-    int counter; //solved
 
     public boolean validateItems() {
         item = table.getItem(); //Irgend ein Item was auf dem Tisch liegt
@@ -15,12 +14,12 @@ public class Raucher extends Thread {
             if (item.equals(myItem)) {
                 if(itemPuffer!=null){
                     table.putItem(itemPuffer);
-                    System.out.println("Dead.Raucher"+threadID+" legt ein Item zurück");
+                    System.out.println("Raucherproblem.Dead.Raucher"+threadID+" legt ein Item zurück");
                     itemPuffer=null;
 
                 }
                 table.putItem(item); //Legt Item auf den Tisch
-                System.out.println("Dead.Raucher"+threadID+" legt ein Item zurück");
+                System.out.println("Raucherproblem.Dead.Raucher"+threadID+" legt ein Item zurück");
                 item=null;
                 return false;
             } else {
@@ -41,49 +40,36 @@ public class Raucher extends Thread {
         this.table=table;
         this.myItem=myItem;
         this.threadID=threadID;
-        counter=0;  //solved
 
     }
 
     public void rauchen() {
-        counter=0;  //solved
         item=null;
         itemPuffer=null;
-        System.out.println("Dead.Raucher "+threadID+" faengt an zu rauchen");
-        StarvationSolvedMain.s.release();
+        System.out.println("Raucherproblem.Dead.Raucher "+threadID+" faengt an zu rauchen");
+        StarvationMain.s.release();
         try {
             this.sleep(10000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        System.out.println("Dead.Raucher "+threadID+" hoert auf zu rauchen");
+        System.out.println("Raucherproblem.Dead.Raucher "+threadID+" hoert auf zu rauchen");
     }
 
     @Override
     public void run() {
         while(true){
-            System.out.println("Dead.Raucher"+threadID+" will Items");
+            System.out.println("Raucherproblem.Dead.Raucher"+threadID+" will Items");
             try {
-                StarvationSolvedMain.itemsOnTable.acquire();
+                StarvationMain.itemsOnTable.acquire();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
             if(validateItems()) {
-               rauchen();
+                rauchen();
            }
             else {
-                //Solved
-                counter++;
-                //Solved
-                if(counter>=3){
-                    item=null;
-                    itemPuffer=null;
-                    StarvationSolvedMain.s.release();
-                }
-                //Solved
-                else {
-                    StarvationSolvedMain.itemsOnTable.release();
-                }
+                StarvationMain.itemsOnTable.release();
             }
         }
     }

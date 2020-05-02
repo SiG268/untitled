@@ -1,4 +1,4 @@
-package Dead;
+package Raucherproblem.Dead_solved;
 
 import java.util.ArrayList;
 

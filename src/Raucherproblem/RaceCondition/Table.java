@@ -1,4 +1,4 @@
-package Dead_solved;
+package Raucherproblem.RaceCondition;
 
 import java.util.ArrayList;
 

@@ -1,4 +1,4 @@
-package Starvation;
+package Raucherproblem.RaceCondition;
 
 public class Dealer extends Thread{
     Table table=null;
@@ -26,10 +26,10 @@ public class Dealer extends Thread{
 
     public void putItemsOnTable(){
         randomItem();
-        System.out.println("Dead.Dealer dealt: "+item1+", "+item2);
+        System.out.println("Raucherproblem.Dead.Dealer dealt: "+item1+", "+item2);
         table.putItem(item1);
         table.putItem(item2);
-        StarvationMain.itemsOnTable.release();
+        System.out.println("TableSize: "+table.items.size());
 
 
     }
@@ -41,7 +41,7 @@ public class Dealer extends Thread{
     public void run() {
         while(true) {
             try {
-                StarvationMain.s.acquire();
+                DeadMain.s.acquire();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
