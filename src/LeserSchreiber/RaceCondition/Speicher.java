@@ -1,13 +1,16 @@
 package LeserSchreiber.RaceCondition;
 
-public class Speicher {
-    StringBuffer text =  new StringBuffer();
+import java.util.ArrayList;
+import java.util.List;
 
-    public void write(String s){
-        text.append(s);
+public class Speicher {
+    List<Datei> text = new ArrayList<Datei>();
+
+    public void write(Datei s,int adress){
+        text.add(adress,s);
     }
 
-    public String read(){
-        return text.toString();
+    public Datei read(int adress){
+        return text.get(adress);
     }
 }

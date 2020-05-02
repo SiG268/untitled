@@ -56,7 +56,7 @@ public class Raucher extends Thread {
         System.out.println("Raucherproblem.Dead.Raucher "+threadID+" faengt an zu rauchen");
         DeadMain.s.release();
         try {
-            this.sleep(100);
+            this.sleep(10000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

@@ -2,6 +2,7 @@ package LeserSchreiber.RaceCondition;
 
 public class Schreiber extends Thread{
     Speicher d;
+    int count = 0;
 
     public Schreiber(Speicher d) {
         this.d=d;
@@ -15,12 +16,13 @@ public class Schreiber extends Thread{
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-
+            count++;
         }
     }
 
     private void schreiben() throws InterruptedException {
-        this.sleep(3000);
-        d.write("Write");
+        this.sleep(100);
+        d.write("Write"+count,count);
+        System.out.println(count);
     }
 }

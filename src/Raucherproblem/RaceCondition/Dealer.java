@@ -4,7 +4,6 @@ public class Dealer extends Thread{
     Table table=null;
     String item1=null;
     String item2=null;
-    private String[] auswahl={"Streichholz","Pepps","Tabak"};
 
     public void randomItem(){
         int i=(int)(Math.random()*3);
@@ -26,7 +25,7 @@ public class Dealer extends Thread{
 
     public void putItemsOnTable(){
         randomItem();
-        System.out.println("Raucherproblem.Dead.Dealer dealt: "+item1+", "+item2);
+        System.out.println("Dealer dealt: "+item1+", "+item2);
         table.putItem(item1);
         table.putItem(item2);
         System.out.println("TableSize: "+table.items.size());

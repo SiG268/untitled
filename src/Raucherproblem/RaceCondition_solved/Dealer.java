@@ -4,7 +4,6 @@ public class Dealer extends Thread{
     Table table=null;
     String item1=null;
     String item2=null;
-    private String[] auswahl={"Streichholz","Pepps","Tabak"};
 
     public void randomItem(){
         int i=(int)(Math.random()*3);

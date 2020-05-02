@@ -75,7 +75,7 @@ public class Raucher extends Thread {
                 //Solved
                 counter++;
                 //Solved
-                if(counter>=3){
+                if(counter>=2){
                     item=null;
                     itemPuffer=null;
                     StarvationSolvedMain.s.release();
