@@ -29,6 +29,7 @@ public class Leser extends Thread {
         }
         DeadSolved.mut_rc.release();
         DeadSolved.sem_Leser.release();
+        System.out.println("Leser"+id+" ist fertig mim lesen");
         //DeadSolved.mut_arbeite.release();
     }
     @Override
