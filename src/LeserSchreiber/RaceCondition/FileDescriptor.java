@@ -1,11 +1,17 @@
 package LeserSchreiber.RaceCondition;
 
-public class FileDescriptor {
-    private int adress;
-    public int getAdress(){
+import java.util.ArrayList;
+import java.util.List;
 
+public class FileDescriptor {
+    FileTable fileTable;
+
+
+    public FileDescriptor(FileTable fileTable) {
+        this.fileTable = fileTable;
     }
-    public putAdress(int adress){
-        this.adress = adress;
+
+    public void fd(int id){
+        fileTable.set(id);
     }
 }

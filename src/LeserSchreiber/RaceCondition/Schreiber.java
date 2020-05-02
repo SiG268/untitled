@@ -1,10 +1,11 @@
 package LeserSchreiber.RaceCondition;
 
 public class Schreiber extends Thread{
-    Speicher d;
+    InodeTable d;
     int count = 0;
+    int adress = 0;
 
-    public Schreiber(Speicher d) {
+    public Schreiber(InodeTable d) {
         this.d=d;
     }
 
@@ -22,7 +23,7 @@ public class Schreiber extends Thread{
 
     private void schreiben() throws InterruptedException {
         this.sleep(100);
-        d.write("Write"+count,count);
+        d.write( new Datei("Inhalt"+count),adress);
         System.out.println(count);
     }
 }

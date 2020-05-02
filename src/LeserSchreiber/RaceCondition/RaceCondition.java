@@ -7,10 +7,12 @@ public class RaceCondition {
     public static Semaphore sem_Leser = new Semaphore(0);
 
     public static void main(String[] args) {
-        Speicher datei = new Speicher();
-        Speicher zwischenSpeicher = new Speicher();
 
-        Leser l = new Leser(datei);
-        Schreiber s = new Schreiber(datei);
+        Datei datei = new Datei(1);
+        FileDescriptor fd = new FileDescriptor(datei);
+        InodeTable speicher = new InodeTable(datei,fd);
+
+        Leser l = new Leser(speicher,fd);
+        Schreiber s = new Schreiber(speicher,fd);
     }
 }

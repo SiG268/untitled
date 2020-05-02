@@ -1,9 +1,9 @@
 package LeserSchreiber.RaceCondition;
 
 public class Leser extends Thread {
-    Speicher d;
+    InodeTable d;
 
-    public Leser(Speicher d) {
+    public Leser(InodeTable d) {
         this.d=d;
     }
     private void lesen() throws InterruptedException {
