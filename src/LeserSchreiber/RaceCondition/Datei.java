@@ -1,17 +1,15 @@
 package LeserSchreiber.RaceCondition;
 
 public class Datei {
-    int id;
-    String Inhalt;
-    public Datei(int id) {
-        this.id = id;
-    }
+    String dateiName;
+    StringBuffer inhalt;
 
+    public Datei(String dateiName) {
+        this.dateiName = dateiName;
+    }
 
     @Override
     public String toString() {
-        return "Datei{" +
-                "Inhalt='" + Inhalt + '\'' +
-                '}';
+        return dateiName+ "\nInhalt = { "+inhalt+" }";
     }
 }

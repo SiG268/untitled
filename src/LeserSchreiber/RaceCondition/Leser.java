@@ -1,14 +1,12 @@
 package LeserSchreiber.RaceCondition;
 
 public class Leser extends Thread {
-    InodeTable d;
 
-    public Leser(InodeTable d) {
-        this.d=d;
+    public Leser() {
     }
     private void lesen() throws InterruptedException {
         this.sleep(100);
-        System.out.println(d.read());
+        System.out.println();
     }
     @Override
     public void run() {
