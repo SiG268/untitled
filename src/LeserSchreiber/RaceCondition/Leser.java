@@ -5,7 +5,7 @@ public class Leser extends Thread {
     public Leser() {
     }
     private void lesen() throws InterruptedException {
-        this.sleep(30);
+        this.sleep(5);
         Datei d = RaceCondition.DS.getDatei("/root/users/user1/desktop/datei1");
         System.out.println("Leser liest: "+d.read());
     }
