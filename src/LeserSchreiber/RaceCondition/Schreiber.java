@@ -1,29 +1,29 @@
 package LeserSchreiber.RaceCondition;
 
 public class Schreiber extends Thread{
-    private int id;
-
+    int id;
     public Schreiber(int i) {
-        this.id = i;
+        this.id =i;
     }
 
     @Override
     public void run() {
-        while(true){
+        while (true) {
             try {
-                schreiben();
-            } catch (InterruptedException e) {
+
+                int n = RaceCondition.sharedStorage2;
+                n++;
+                RaceCondition.sharedStorage1 = n;
+                System.out.println("Schreiber"+id+" schreibt:" + n);
+                sleep((int)(Math.random()*1000));
+
+            } catch (Exception e) {
                 e.printStackTrace();
             }
-            RaceCondition.count++;
         }
     }
 
-    private void schreiben() throws InterruptedException {
-        this.sleep(100);
-        Datei d = RaceCondition.DS.getDatei("/root/users/user1/desktop/datei1");
-        String s = "Hallo "+RaceCondition.count;
-        System.out.println("Schreiber"+this.id+" schreibt: "+s);
-        d.write(s);
-    }
+
+
 }
+

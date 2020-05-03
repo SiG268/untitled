@@ -1,32 +1,28 @@
 package LeserSchreiber.RaceConditionSolved;
 
+
 public class Leser extends Thread {
 
-    public Leser() {
+    int id;
+    public Leser(int i) {
+        this.id=i;
     }
-    private void lesen() throws InterruptedException {
-        //this.sleep(1000);
-        RaceConditionSolved.mut_arbeiten.acquire();
-        RaceConditionSolved.read_count++;
-        if(RaceConditionSolved.read_count == 1){
-            RaceConditionSolved.sem_Schreiber.acquire();
-        }
-        RaceConditionSolved.mut_arbeiten.release();
-        Datei d = RaceConditionSolved.DS.getDatei("/root/users/user1/desktop/datei1");
-        System.out.println("Leser liest: "+d.read());
-        //this.sleep(1000);
-        RaceConditionSolved.mut_arbeiten.acquire();
-        RaceConditionSolved.read_count--;
-        if(RaceConditionSolved.read_count == 0){
-            RaceConditionSolved.sem_Schreiber.release();
-        }
-        RaceConditionSolved.mut_arbeiten.release();
-    }
+
     @Override
     public void run() {
         while(true){
             try {
-                lesen();
+
+                RaceConditionSolved.ss1.acquire();
+                int n = RaceConditionSolved.sharedStorage1;
+                System.out.println("Leser"+id+" liest: "+ n);
+                RaceConditionSolved.ss2.acquire();
+                RaceConditionSolved.sharedStorage2 = n;
+                RaceConditionSolved.ss2.release();
+                RaceConditionSolved.ss1.release();
+                sleep((int)(Math.random()*1000));
+
+
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

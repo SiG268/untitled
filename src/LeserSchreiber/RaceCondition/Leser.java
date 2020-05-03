@@ -1,19 +1,23 @@
 package LeserSchreiber.RaceCondition;
 
+
 public class Leser extends Thread {
 
-    public Leser() {
+    int id;
+    public Leser(int i) {
+        this.id=i;
     }
-    private void lesen() throws InterruptedException {
-        this.sleep(5);
-        Datei d = RaceCondition.DS.getDatei("/root/users/user1/desktop/datei1");
-        System.out.println("Leser liest: "+d.read());
-    }
+
     @Override
     public void run() {
         while(true){
             try {
-                lesen();
+
+                int n = RaceCondition.sharedStorage1;
+                System.out.println("Leser"+id+" liest: "+ n);
+                RaceCondition.sharedStorage2 = n;
+                sleep((int)(Math.random()*1000));
+
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

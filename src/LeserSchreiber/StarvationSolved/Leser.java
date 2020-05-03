@@ -1,34 +1,30 @@
 package LeserSchreiber.StarvationSolved;
 
+
 public class Leser extends Thread {
 
-    public Leser() {
+    int id;
+    public Leser(int i) {
+        this.id=i;
     }
-    private void lesen() throws InterruptedException {
-        //this.sleep(1);
-        StarvationSolved.sem_Leser.acquire();
-        StarvationSolved.mut_rc.acquire();
-        StarvationSolved.read_count++;
-        if(StarvationSolved.read_count == 1){
-            StarvationSolved.sem_Schreiber.acquire();
-        }
-        StarvationSolved.mut_rc.release();
-        Datei d = StarvationSolved.DS.getDatei("/root/users/user1/desktop/datei1");
-        System.out.println("Leser liest: "+d.read());
-        //this.sleep(1000);
-        StarvationSolved.mut_rc.acquire();
-        StarvationSolved.read_count--;
-        if(StarvationSolved.read_count == 0){
-            StarvationSolved.sem_Schreiber.release();
-        }
-        StarvationSolved.mut_rc.release();
-        StarvationSolved.sem_Leser.release();
-    }
+
     @Override
     public void run() {
         while(true){
             try {
-                lesen();
+                
+                StarvationSolved.mut_arbeiten.acquire();
+                StarvationSolved.ss1.acquire();
+                int n = StarvationSolved.sharedStorage1;
+                System.out.println("Leser"+id+" liest: "+ n);
+                StarvationSolved.ss2.acquire();
+                StarvationSolved.sharedStorage2 = n;
+                StarvationSolved.ss2.release();
+                StarvationSolved.ss1.release();
+                sleep((int)(Math.random()*1000));
+
+                StarvationSolved.mut_arbeiten.release();
+
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
