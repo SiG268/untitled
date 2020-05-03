@@ -1,27 +1,29 @@
 package LeserSchreiber.RaceConditionSolved;
 
+import LeserSchreiber.RaceCondition.RaceCondition;
+
 public class Leser extends Thread {
 
     public Leser() {
     }
     private void lesen() throws InterruptedException {
         //this.sleep(1000);
-        RaceConditionSolved.mut_arbeiten.acquire();
+        RaceConditionSolved.mut_counter.acquire();
         RaceConditionSolved.read_count++;
         if(RaceConditionSolved.read_count == 1){
-            RaceConditionSolved.sem_Schreiber.acquire();
+            RaceConditionSolved.mut_arbeiten.acquire();
         }
-        RaceConditionSolved.mut_arbeiten.release();
+        RaceConditionSolved.mut_counter.release();
         Datei d = RaceConditionSolved.DS.getDatei("/root/users/user1/desktop/datei1");
         System.out.println("Leser liest: "+d.read());
-        //this.sleep(1000);
-        RaceConditionSolved.mut_arbeiten.acquire();
+        RaceConditionSolved.mut_counter.acquire();
         RaceConditionSolved.read_count--;
         if(RaceConditionSolved.read_count == 0){
-            RaceConditionSolved.sem_Schreiber.release();
+            RaceConditionSolved.mut_arbeiten.release();
         }
-        RaceConditionSolved.mut_arbeiten.release();
+        RaceConditionSolved.mut_counter.release();
     }
+
     @Override
     public void run() {
         while(true){
