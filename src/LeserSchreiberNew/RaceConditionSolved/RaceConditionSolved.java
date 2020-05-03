@@ -1,9 +1,9 @@
-package LeserSchreiberNew.RaceCondition;
+package LeserSchreiberNew.RaceConditionSolved;
 
 
 import java.util.concurrent.Semaphore;
 
-public class RaceCondition {
+public class RaceConditionSolved {
 
     public static int sharedStorage1 = 0;
     public static int sharedStorage2 = 0;

@@ -12,9 +12,11 @@ public class Leser extends Thread {
     public void run() {
         while(true){
             try {
-                int n = RaceCondition.sharedStorage;
+
+                int n = RaceCondition.sharedStorage1;
                 System.out.println("Leser"+id+" liest: "+ n);
-                sleep(1000);
+                RaceCondition.sharedStorage2 = n;
+                sleep((int)(Math.random()*1000));
 
             } catch (InterruptedException e) {
                 e.printStackTrace();

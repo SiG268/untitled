@@ -12,22 +12,15 @@ public class Leser extends Thread {
     public void run() {
         while(true){
             try {
-                //Gemeinsamen Speicher beanspruchen
-                RaceCondition.mut_readCount.acquire();
-                RaceCondition.readCount++;
-                if(RaceCondition.readCount==1){RaceCondition.mut_arbeiten.acquire();}
-                RaceCondition.mut_readCount.release();
 
-                //Gemeinsamen Speicher lesen
-                sleep((int)(Math.random()*1000));
-                int n = RaceCondition.sharedStorage;
+                RaceConditionSolved.ss1.acquire();
+                int n = RaceConditionSolved.sharedStorage1;
                 System.out.println("Leser"+id+" liest: "+ n);
-
-                //Gemeinsamen Speicher wieder freigeben
-                RaceCondition.mut_readCount.acquire();
-                RaceCondition.readCount--;
-                if(RaceCondition.readCount==0){RaceCondition.mut_arbeiten.release();}
-                RaceCondition.mut_readCount.release();
+                RaceConditionSolved.ss2.acquire();
+                RaceConditionSolved.sharedStorage2 = n;
+                RaceConditionSolved.ss2.release();
+                RaceConditionSolved.ss1.release();
+                sleep((int)(Math.random()*1000));
 
 
             } catch (InterruptedException e) {

@@ -8,7 +8,7 @@ public class Leser extends Thread {
         this.id = i;
     }
     private void lesen() throws InterruptedException {
-        this.sleep(10);
+        this.sleep((int)(Math.random()*100));
         //DeadSolved.mut_arbeite.acquire();
 
         System.out.println("Leser"+this.id+" will lesen");
@@ -23,7 +23,7 @@ public class Leser extends Thread {
         DeadSolved.sem_Leser.release();
         Datei d = DeadSolved.DS.getDatei("/root/users/user1/desktop/datei1");
         System.out.println("Leser"+this.id+" liest: "+d.read());
-        this.sleep(100);
+        this.sleep((int)(Math.random()*100));
         System.out.println("Leser"+id+" ist fertig mim lesen");
         DeadSolved.mut_rc.acquire();
         DeadSolved.read_count--;

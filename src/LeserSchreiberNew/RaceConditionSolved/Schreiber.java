@@ -10,14 +10,17 @@ public class Schreiber extends Thread{
     public void run() {
         while (true) {
             try {
-                RaceCondition.mut_arbeiten.acquire();
-                int n = RaceCondition.sharedStorage;
-                //Berechnung durchführen
-                sleep((int)(Math.random()*1000));
+
+                RaceConditionSolved.ss2.acquire();
+                int n = RaceConditionSolved.sharedStorage2;
                 n++;
-                System.out.println("Schreiber"+id+" schreibt:" +n);
-                RaceCondition.sharedStorage=n;
-                RaceCondition.mut_arbeiten.release();
+                RaceConditionSolved.ss1.acquire();
+                RaceConditionSolved.sharedStorage1 = n;
+                RaceConditionSolved.ss1.release();
+                RaceConditionSolved.ss2.release();
+                System.out.println("Schreiber"+id+" schreibt:" + n);
+                sleep((int)(Math.random()*1000));
+
             } catch (Exception e) {
                 e.printStackTrace();
             }

@@ -19,21 +19,20 @@ public class Schreiber extends Thread{
     }
 
     private void schreiben() throws InterruptedException {
-        this.sleep(10);
+        this.sleep((int)(Math.random()*100));
         System.out.println("Schreiber"+this.id+" will schreiben");
         //DeadSolved.mut_arbeite.acquire();
 
 
 
 
-
+        DeadSolved.sem_Schreiber.acquire();
         DeadSolved.sem_Leser.acquire();
 
-        DeadSolved.sem_Schreiber.acquire();
         System.out.println("Schreiber"+id+" beginnt schreiben");
-        this.sleep(100);
+        this.sleep((int)(Math.random()*100));
         Datei d = DeadSolved.DS.getDatei("/root/users/user1/desktop/datei1");
-        System.out.println("Schreiber"+this.id+" schreibt:"+ DeadSolved.count);
+        System.out.println("Schreiber"+this.id+" hat: "+ DeadSolved.count+"geschrieben");
         d.write(DeadSolved.count);
         DeadSolved.count++;
         DeadSolved.sem_Schreiber.release();

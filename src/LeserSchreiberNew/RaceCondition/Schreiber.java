@@ -10,11 +10,13 @@ public class Schreiber extends Thread{
     public void run() {
         while (true) {
             try {
-                int n = RaceCondition.sharedStorage;
-                sleep((int)(Math.random()*1000));
+
+                int n = RaceCondition.sharedStorage2;
                 n++;
-                System.out.println("Schreiber"+id+" schreibt:" +n);
-                RaceCondition.sharedStorage=n;
+                RaceCondition.sharedStorage1 = n;
+                System.out.println("Schreiber"+id+" schreibt:" + n);
+                sleep((int)(Math.random()*1000));
+
             } catch (Exception e) {
                 e.printStackTrace();
             }
