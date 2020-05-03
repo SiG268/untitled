@@ -11,6 +11,7 @@ public class DeadSolved {
     public static int count;
     public static int read_count = 0;
     public static int write_counter = 0;
+    public static Semaphore mut_arbeite = new Semaphore(1);
 
     public static void main(String[] args) {
 
@@ -18,9 +19,9 @@ public class DeadSolved {
         //Datei datei = new Datei(1);
         DS.create("/root/users/user1/desktop/", "datei1");
 
-        Leser l1 = new Leser();
-        Leser l2 = new Leser();
-        Leser l3 = new Leser();
+        Leser l1 = new Leser(0);
+        Leser l2 = new Leser(1);
+        Leser l3 = new Leser(2);
         Schreiber s1 = new Schreiber(0);
         Schreiber s2 = new Schreiber(1);
         s1.start();
