@@ -1,30 +1,35 @@
 package LeserSchreiber.RaceConditionSolved;
 
 public class Schreiber extends Thread{
-    private int id;
-
+    int id;
     public Schreiber(int i) {
-        this.id = i;
+        this.id =i;
     }
 
     @Override
     public void run() {
-        while(true){
+        while (true) {
             try {
-                schreiben();
-            } catch (InterruptedException e) {
+
+                //Dead.mut_arbeiten.acquire();
+                RaceConditionSolved.ss2.acquire();
+                int n = RaceConditionSolved.sharedStorage2;
+                n++;
+                RaceConditionSolved.ss1.acquire();
+                RaceConditionSolved.sharedStorage1 = n;
+                RaceConditionSolved.ss1.release();
+                RaceConditionSolved.ss2.release();
+                System.out.println("Schreiber"+id+" schreibt:" + n);
+                sleep((int)(Math.random()*1000));
+                //Dead.mut_arbeiten.release();
+
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
     }
 
-    private void schreiben() throws InterruptedException {
-        //this.sleep(100);
-        RaceConditionSolved.sem_Schreiber.acquire();
-        Datei d = RaceConditionSolved.DS.getDatei("/root/users/user1/desktop/datei1");
-        System.out.println("Schreiber"+this.id+" schreibt:"+ RaceConditionSolved.count);
-        d.write(RaceConditionSolved.count);
-        RaceConditionSolved.count++;
-        RaceConditionSolved.sem_Schreiber.release();
-    }
+
+
 }
+
