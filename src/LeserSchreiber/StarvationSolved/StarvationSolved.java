@@ -6,11 +6,15 @@ public class StarvationSolved {
 
     public static int sharedStorage = 0;
     public static int readCount = 0;
+    public static int writeCount = 0;
 
     public static Semaphore mut_writeStorage = new Semaphore(1);
     public static Semaphore mut_readCount = new Semaphore(1);
-    public static Semaphore mut_read = new Semaphore(0);
-    public static Semaphore mut_write = new Semaphore(0);
+    public static Semaphore mut_read = new Semaphore(1);
+    public static Semaphore mut_write = new Semaphore(1);
+    public static Semaphore mut_wantread = new Semaphore(1);
+    public static Semaphore mut_writeCount = new Semaphore(1);
+
 
     public static void main(String[] args) {
         Takt t = new Takt();

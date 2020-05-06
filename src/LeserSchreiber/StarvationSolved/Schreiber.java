@@ -12,8 +12,11 @@ public class Schreiber extends Thread{
             try {
 
                 //Setze Sperre auf Storage
+                StarvationSolved.mut_writeCount.acquire();
+                StarvationSolved.writeCount++;
+                if(StarvationSolved.writeCount == 1) StarvationSolved.mut_read.release();
+                StarvationSolved.mut_writeCount.release();
                 StarvationSolved.mut_write.acquire();
-                StarvationSolved.mut_writeStorage.acquire();
 
                 //Schreibe
                 StarvationSolved.sharedStorage++;
@@ -22,8 +25,11 @@ public class Schreiber extends Thread{
                 sleep((int)(Math.random()*100));
 
                 //Löse Sperre auf Storage
-                StarvationSolved.mut_writeStorage.release();
                 StarvationSolved.mut_write.release();
+                StarvationSolved.mut_writeCount.acquire();
+                StarvationSolved.writeCount--;
+                if(StarvationSolved.writeCount == 0) StarvationSolved.mut_read.release();
+                StarvationSolved.mut_writeCount.release();
 
 
             } catch (Exception e) {
