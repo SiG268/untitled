@@ -4,13 +4,17 @@ public class Takt extends Thread{
     @Override
     public void run() {
         try {
+
             while(true) {
-                StarvationSolved.mut_write.release();
+                System.out.println("Lesephase");
+                StarvationSolved.mut_readTakt.release();
                 sleep(100);
-                StarvationSolved.mut_write.acquire();
-                StarvationSolved.mut_read.release();
+                StarvationSolved.mut_readTakt.acquire();
+                System.out.println("Schreibphase");
+                StarvationSolved.mut_writeTakt.release();
                 sleep(100);
-                StarvationSolved.mut_read.acquire();
+                StarvationSolved.mut_writeTakt.acquire();
+
             }
         } catch (InterruptedException e) {
             e.printStackTrace();

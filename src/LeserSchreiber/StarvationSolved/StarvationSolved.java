@@ -7,6 +7,10 @@ public class StarvationSolved {
     public static int sharedStorage = 0;
     public static int readCount = 0;
     public static int writeCount = 0;
+    public static boolean mode = false;
+
+    public static Semaphore mut_writeTakt = new Semaphore(0);
+    public static Semaphore mut_readTakt = new Semaphore(0);
 
     public static Semaphore mut_writeStorage = new Semaphore(1);
     public static Semaphore mut_readCount = new Semaphore(1);
@@ -14,6 +18,10 @@ public class StarvationSolved {
     public static Semaphore mut_write = new Semaphore(1);
     public static Semaphore mut_wantread = new Semaphore(1);
     public static Semaphore mut_writeCount = new Semaphore(1);
+    public static Semaphore mut_wantReadCount = new Semaphore(1);
+    public static int wantReadCount = 0;
+    public static Semaphore mut_wantWriteCount = new Semaphore(1);
+    public static int wantWriteCount = 0;
 
 
     public static void main(String[] args) {
