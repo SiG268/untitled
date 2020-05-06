@@ -1,34 +1,31 @@
 package LeserSchreiber.Dead;
 
+
+
 public class Leser extends Thread {
 
-    public Leser() {
+    int id;
+    public Leser(int i) {
+        this.id=i;
     }
-    private void lesen() throws InterruptedException {
-        //this.sleep(1);
-        Dead.sem_Leser.acquire();
-        Dead.mut_rc.acquire();
-        Dead.read_count++;
-        if(Dead.read_count == 1){
-            Dead.sem_Schreiber.acquire();
-        }
-        Dead.mut_rc.release();
-        Datei d = Dead.DS.getDatei("/root/users/user1/desktop/datei1");
-        System.out.println("Leser liest: "+d.read());
-        //this.sleep(1000);
-        Dead.mut_rc.acquire();
-        Dead.read_count--;
-        if(Dead.read_count == 0){
-            Dead.sem_Schreiber.release();
-        }
-        Dead.mut_rc.release();
-        Dead.sem_Leser.release();
-    }
+
     @Override
     public void run() {
         while(true){
             try {
-                lesen();
+                
+                //Dead.mut_arbeiten.acquire();
+                Dead.ss1.acquire();
+                int n = Dead.sharedStorage1;
+                System.out.println("Leser"+id+" liest: "+ n);
+                Dead.ss2.acquire();
+                Dead.sharedStorage2 = n;
+                Dead.ss2.release();
+                Dead.ss1.release();
+                sleep((int)(Math.random()*1000));
+
+                //Dead.mut_arbeiten.release();
+
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

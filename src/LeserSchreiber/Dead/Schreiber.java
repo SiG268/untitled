@@ -1,44 +1,35 @@
 package LeserSchreiber.Dead;
 
 public class Schreiber extends Thread{
-    private int id;
-
+    int id;
     public Schreiber(int i) {
-        this.id = i;
+        this.id =i;
     }
 
     @Override
     public void run() {
-        while(true){
+        while (true) {
             try {
-                schreiben();
-            } catch (InterruptedException e) {
+
+                //Dead.mut_arbeiten.acquire();
+                Dead.ss2.acquire();
+                int n = Dead.sharedStorage2;
+                n++;
+                Dead.ss1.acquire();
+                Dead.sharedStorage1 = n;
+                Dead.ss1.release();
+                Dead.ss2.release();
+                System.out.println("Schreiber"+id+" schreibt:" + n);
+                sleep((int)(Math.random()*1000));
+                //Dead.mut_arbeiten.release();
+
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
     }
 
-    private void schreiben() throws InterruptedException {
-        //this.sleep(100);
 
-        Dead.sem_Schreiber.acquire();
-        Dead.mut_wc.acquire();
-        Dead.write_counter++;
-        if(Dead.write_counter == 1){
-            Dead.sem_Leser.acquire();
-        }
-        Dead.mut_wc.release();
 
-        Datei d = Dead.DS.getDatei("/root/users/user1/desktop/datei1");
-        System.out.println("Schreiber"+this.id+" schreibt:"+ Dead.count);
-        d.write(Dead.count);
-        Dead.count++;
-        Dead.mut_wc.acquire();
-        Dead.write_counter--;
-        if (Dead.write_counter == 0){
-            Dead.sem_Leser.release();
-        }
-        Dead.mut_wc.release();
-        Dead.sem_Schreiber.release();
-    }
 }
+

@@ -1,30 +1,36 @@
 package LeserSchreiber.Starvation;
 
 public class Schreiber extends Thread{
-    private int id;
-
+    int id;
     public Schreiber(int i) {
-        this.id = i;
+        this.id =i;
     }
 
     @Override
     public void run() {
-        while(true){
+        while (true) {
             try {
-                schreiben();
-            } catch (InterruptedException e) {
+                System.out.println("Schreiber"+id+"will Schreiben");
+                Starviation.mut_arbeiten.acquire();
+                Starviation.ss2.acquire();
+                int n = Starviation.sharedStorage2;
+                n++;
+                Starviation.ss1.acquire();
+                Starviation.sharedStorage1 = n;
+                Starviation.ss1.release();
+                Starviation.ss2.release();
+                System.out.println("Schreiber"+id+" schreibt:" + n);
+                sleep((int)(Math.random()*100));
+                System.out.println("Schreiber"+id+" hat fertig geschrieben");
+                Starviation.mut_arbeiten.release();
+
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
     }
 
-    private void schreiben() throws InterruptedException {
-        //this.sleep(100);
-        Starvation.sem_Schreiber.acquire();
-        Datei d = Starvation.DS.getDatei("/root/users/user1/desktop/datei1");
-        System.out.println("Schreiber"+this.id+" schreibt:"+ Starvation.count);
-        d.write(Starvation.count);
-        Starvation.count++;
-        Starvation.sem_Schreiber.release();
-    }
+
+
 }
+

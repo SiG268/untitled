@@ -19,13 +19,12 @@ public class Schreiber extends Thread{
     }
 
     private void schreiben() throws InterruptedException {
-
-        RaceConditionSolved.mut_arbeiten.acquire();
         //this.sleep(100);
+        RaceConditionSolved.sem_Schreiber.acquire();
         Datei d = RaceConditionSolved.DS.getDatei("/root/users/user1/desktop/datei1");
         System.out.println("Schreiber"+this.id+" schreibt:"+ RaceConditionSolved.count);
         d.write(RaceConditionSolved.count);
         RaceConditionSolved.count++;
-        RaceConditionSolved.mut_arbeiten.release();
+        RaceConditionSolved.sem_Schreiber.release();
     }
 }

@@ -1,44 +1,35 @@
 package LeserSchreiber.StarvationSolved;
 
 public class Schreiber extends Thread{
-    private int id;
-
+    int id;
     public Schreiber(int i) {
-        this.id = i;
+        this.id =i;
     }
 
     @Override
     public void run() {
-        while(true){
+        while (true) {
             try {
-                schreiben();
-            } catch (InterruptedException e) {
+
+                StarvationSolved.mut_arbeiten.acquire();
+                StarvationSolved.ss2.acquire();
+                int n = StarvationSolved.sharedStorage2;
+                n++;
+                StarvationSolved.ss1.acquire();
+                StarvationSolved.sharedStorage1 = n;
+                StarvationSolved.ss1.release();
+                StarvationSolved.ss2.release();
+                System.out.println("Schreiber"+id+" schreibt:" + n);
+                sleep((int)(Math.random()*1000));
+                StarvationSolved.mut_arbeiten.release();
+
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
     }
 
-    private void schreiben() throws InterruptedException {
-        //this.sleep(100);
 
-        StarvationSolved.sem_Schreiber.acquire();
-        StarvationSolved.mut_wc.acquire();
-        StarvationSolved.write_counter++;
-        if(StarvationSolved.write_counter == 1){
-            StarvationSolved.sem_Leser.acquire();
-        }
-        StarvationSolved.mut_wc.release();
 
-        Datei d = StarvationSolved.DS.getDatei("/root/users/user1/desktop/datei1");
-        System.out.println("Schreiber"+this.id+" schreibt:"+ StarvationSolved.count);
-        d.write(StarvationSolved.count);
-        StarvationSolved.count++;
-        StarvationSolved.mut_wc.acquire();
-        StarvationSolved.write_counter--;
-        if (StarvationSolved.write_counter == 0){
-            StarvationSolved.sem_Leser.release();
-        }
-        StarvationSolved.mut_wc.release();
-        StarvationSolved.sem_Schreiber.release();
-    }
 }
+

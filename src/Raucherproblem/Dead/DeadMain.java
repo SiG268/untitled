@@ -13,7 +13,7 @@ public class DeadMain {
         Table table = new Table();
         Raucher r1 =  new Raucher(table, "Streichholz",1);
         Raucher r2 =  new Raucher(table, "Tabak",2);
-        Raucher r3 =  new Raucher(table, "Pepps",3);
+        Raucher r3 =  new Raucher(table, "Papier",3);
         Dealer d =  new Dealer(table);
 
 
@@ -21,9 +21,6 @@ public class DeadMain {
         r1.start();
         r2.start();
         r3.start();
-
-
-
     }
 
 
