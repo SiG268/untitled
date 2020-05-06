@@ -15,7 +15,8 @@ public class Schreiber extends Thread{
                 RaceConditionSolved.mut_writeStorage.acquire();
 
                 //Schreibe
-                int n = RaceConditionSolved.sharedStorage + 1;
+                RaceConditionSolved.sharedStorage++;
+                int n = RaceConditionSolved.sharedStorage;
                 System.out.println("Schreiber"+id+" schreibt:" + n);
                 sleep((int)(Math.random()*1000));
 

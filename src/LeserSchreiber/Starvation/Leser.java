@@ -18,7 +18,6 @@ public class Leser extends Thread {
                 Starvation.mut_readCount.release();
 
                 //Lese
-                Starvation.mut_writeStorage.acquire();
                 int n = Starvation.sharedStorage;
                 System.out.println("Leser"+id+" liest: "+ n);
                 sleep((int)(Math.random()*1000));

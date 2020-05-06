@@ -15,7 +15,8 @@ public class Schreiber extends Thread{
                 Starvation.mut_writeStorage.acquire();
 
                 //Schreibe
-                int n = Starvation.sharedStorage + 1;
+                Starvation.sharedStorage ++;
+                int n = Starvation.sharedStorage;
                 System.out.println("Schreiber"+id+" schreibt:" + n);
                 sleep((int)(Math.random()*1000));
 

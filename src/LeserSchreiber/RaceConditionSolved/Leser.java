@@ -19,7 +19,6 @@ public class Leser extends Thread {
                 RaceConditionSolved.mut_readCount.release();
 
                 //Lese
-                RaceConditionSolved.mut_writeStorage.acquire();
                 int n = RaceConditionSolved.sharedStorage;
                 System.out.println("Leser"+id+" liest: "+ n);
                 sleep((int)(Math.random()*1000));

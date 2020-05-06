@@ -12,16 +12,17 @@ public class Leser extends Thread {
         while(true){
             try {
                 //Setze Sperre auf Storage
+                StarvationSolved.mut_read.acquire();
                 StarvationSolved.mut_readCount.acquire();
                 StarvationSolved.readCount++;
                 if(StarvationSolved.readCount==1) StarvationSolved.mut_writeStorage.acquire();
                 StarvationSolved.mut_readCount.release();
 
                 //Lese
-                StarvationSolved.mut_writeStorage.acquire();
+                StarvationSolved.mut_read.release();
                 int n = StarvationSolved.sharedStorage;
                 System.out.println("Leser"+id+" liest: "+ n);
-                sleep((int)(Math.random()*1000));
+                sleep((int)(Math.random()*100));
 
                 //Löse Sperre auf Storage
                 StarvationSolved.mut_readCount.acquire();
