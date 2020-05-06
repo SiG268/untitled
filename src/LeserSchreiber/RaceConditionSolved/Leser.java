@@ -12,18 +12,23 @@ public class Leser extends Thread {
     public void run() {
         while(true){
             try {
-                
-                //Dead.mut_arbeiten.acquire();
-                RaceConditionSolved.ss1.acquire();
-                int n = RaceConditionSolved.sharedStorage1;
+                //Setze Sperre auf Storage
+                RaceConditionSolved.mut_readCount.acquire();
+                RaceConditionSolved.readCount++;
+                if(RaceConditionSolved.readCount==1) RaceConditionSolved.mut_writeStorage.acquire();
+                RaceConditionSolved.mut_readCount.release();
+
+                //Lese
+                RaceConditionSolved.mut_writeStorage.acquire();
+                int n = RaceConditionSolved.sharedStorage;
                 System.out.println("Leser"+id+" liest: "+ n);
-                RaceConditionSolved.ss2.acquire();
-                RaceConditionSolved.sharedStorage2 = n;
-                RaceConditionSolved.ss2.release();
-                RaceConditionSolved.ss1.release();
                 sleep((int)(Math.random()*1000));
 
-                //Dead.mut_arbeiten.release();
+                //Löse Sperre auf Storage
+                RaceConditionSolved.mut_readCount.acquire();
+                RaceConditionSolved.readCount--;
+                if(RaceConditionSolved.readCount==0) RaceConditionSolved.mut_writeStorage.release();
+                RaceConditionSolved.mut_readCount.release();
 
             } catch (InterruptedException e) {
                 e.printStackTrace();

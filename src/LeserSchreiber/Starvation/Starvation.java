@@ -1,8 +1,8 @@
-package LeserSchreiber.StarvationSolved;
+package LeserSchreiber.Starvation;
 
 import java.util.concurrent.Semaphore;
 
-public class StarvationSolved {
+public class Starvation {
 
     public static int sharedStorage = 0;
     public static int readCount = 0;

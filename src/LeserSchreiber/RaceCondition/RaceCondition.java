@@ -1,23 +1,10 @@
 package LeserSchreiber.RaceCondition;
 
-
-import java.util.concurrent.Semaphore;
-
 public class RaceCondition {
 
-    public static int sharedStorage1 = 0;
-    public static int sharedStorage2 = 0;
-    public static int readCount = 0;
-    public static Semaphore ss1 = new Semaphore(1);
-    public static Semaphore ss2 = new Semaphore(1);
-    public static Semaphore mut_arbeiten = new Semaphore(1);
-    public static Semaphore mut_readCount = new Semaphore(1);
-    //public static Semaphore mut_schreibe = new Semaphore(1);
+    public static int sharedStorage = 0;
 
     public static void main(String[] args) {
-
-
-
         Leser l1 = new Leser(1);
         Leser l2 = new Leser(2);
         Leser l3 = new Leser(3);

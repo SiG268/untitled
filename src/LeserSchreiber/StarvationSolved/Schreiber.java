@@ -11,17 +11,17 @@ public class Schreiber extends Thread{
         while (true) {
             try {
 
-                StarvationSolved.mut_arbeiten.acquire();
-                StarvationSolved.ss2.acquire();
-                int n = StarvationSolved.sharedStorage2;
-                n++;
-                StarvationSolved.ss1.acquire();
-                StarvationSolved.sharedStorage1 = n;
-                StarvationSolved.ss1.release();
-                StarvationSolved.ss2.release();
+                //Setze Sperre auf Storage
+                StarvationSolved.mut_writeStorage.acquire();
+
+                //Schreibe
+                int n = StarvationSolved.sharedStorage + 1;
                 System.out.println("Schreiber"+id+" schreibt:" + n);
                 sleep((int)(Math.random()*1000));
-                StarvationSolved.mut_arbeiten.release();
+
+                //Löse Sperre auf Storage
+                StarvationSolved.mut_writeStorage.release();
+
 
             } catch (Exception e) {
                 e.printStackTrace();

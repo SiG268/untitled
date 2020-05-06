@@ -1,6 +1,5 @@
 package LeserSchreiber.RaceCondition;
 
-
 public class Leser extends Thread {
 
     int id;
@@ -12,12 +11,9 @@ public class Leser extends Thread {
     public void run() {
         while(true){
             try {
-
-                int n = RaceCondition.sharedStorage1;
+                int n = RaceCondition.sharedStorage;
                 System.out.println("Leser"+id+" liest: "+ n);
-                RaceCondition.sharedStorage2 = n;
                 sleep((int)(Math.random()*1000));
-
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
