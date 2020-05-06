@@ -1,8 +1,8 @@
 package ProdCons.RaceConditionSolved;
 
 public class Producer extends Thread{
-    private Factory factory=null;
-    private Puffer lager=null;
+    private Factory factory;
+    private Puffer lager;
 
     public Producer(Factory factory, Puffer lager){
         this.factory=factory;
@@ -13,39 +13,25 @@ public class Producer extends Thread{
     public void run() {
         while (true) {
             if(factory!=null&&lager!=null) {
+                try{
                 System.out.println("Producer will Fabrik");
-                try {
-                    RaceSolvedMain.mut_fabrikSperre.acquire();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+                RaceSolvedMain.mut_fabrikSperre.acquire();
                 System.out.println("Producer hat Fabrik");
                 String item = factory.produce();
                 RaceSolvedMain.mut_fabrikSperre.release();
-                try {
-                    this.sleep(100);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+                this.sleep(100);
                 System.out.println("Producer will Lager");
-                try {
-                    RaceSolvedMain.mut_lagerSperre.acquire();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+                RaceSolvedMain.mut_lagerSperre.acquire();
                 System.out.println("Producer hat Lager");
-                try {
-                    RaceSolvedMain.sem_pufferImLager.acquire();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                System.out.println("Producer: "+item);
-
+                RaceSolvedMain.sem_pufferImLager.acquire();
+                System.out.println("Producer: " + item);
                 lager.putItem(item);
-
                 //System.out.println(lager);
                 RaceSolvedMain.sem_itemsImLager.release();
                 RaceSolvedMain.mut_lagerSperre.release();
+                }catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
         }
     }

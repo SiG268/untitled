@@ -18,12 +18,12 @@ public class Puffer {
     public void putItem(String i){
         list.add(list.size(),i);            //set item on last possible index
     }
-    /*
+
     public String toString(){
         String s ="Items: ";
         for(String i:list){
             s=s+i+" ";
         }
         return s;
-    }*/
+    }
 }

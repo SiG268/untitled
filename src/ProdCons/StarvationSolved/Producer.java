@@ -1,8 +1,8 @@
 package ProdCons.StarvationSolved;
 
 public class Producer extends Thread{
-    private Factory factory=null;
-    private Puffer lager=null;
+    private Factory factory;
+    private Puffer lager;
 
     public Producer(Factory factory, Puffer lager){
         this.factory=factory;
@@ -12,47 +12,28 @@ public class Producer extends Thread{
     @Override
     public void run() {
         while (true) {
-            if(factory!=null&&lager!=null) {
+            if (factory != null && lager != null) {
                 try {
                     StarvationSolved.sem_pufferImLager.acquire();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                try {
                     StarvationSolved.mut_arbeiten.acquire();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                //System.out.println("Producer will Fabrik");
-                try {
+                    System.out.println("Producer will Fabrik");
                     StarvationSolved.mut_fabrikSperre.acquire();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                //System.out.println("Producer hat Fabrik");
-                String item = factory.produce();
-                StarvationSolved.mut_fabrikSperre.release();
-                try {
+                    System.out.println("Producer hat Fabrik");
+                    String item = factory.produce();
+                    StarvationSolved.mut_fabrikSperre.release();
                     this.sleep(100);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                //System.out.println("Producer will Lager");
-                try {
+                    System.out.println("Producer will Lager");
                     StarvationSolved.mut_lagerSperre.acquire();
+                    System.out.println("Producer hat Lager");
+                    System.out.println("Producer: " + item);
+                    lager.putItem(item);
+                    System.out.println(lager);
+                    StarvationSolved.sem_itemsImLager.release();
+                    StarvationSolved.mut_lagerSperre.release();
+                    StarvationSolved.mut_arbeiten.release();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                //System.out.println("Producer hat Lager");
-
-                System.out.println("Producer: "+item);
-
-                lager.putItem(item);
-
-                System.out.println(lager);
-                StarvationSolved.sem_itemsImLager.release();
-                StarvationSolved.mut_lagerSperre.release();
-                StarvationSolved.mut_arbeiten.release();
             }
         }
     }

@@ -1,59 +1,42 @@
 package ProdCons.Starvation;
 
 public class Consumer extends Thread {
-    private Factory factory=null;
-    private Puffer lager=null;
+    private Factory factory;
+    private Puffer lager;
 
-    public Consumer(Factory factory, Puffer lager){
-        this.factory=factory;
-        this.lager=lager;
+    public Consumer(Factory factory, Puffer lager) {
+        this.factory = factory;
+        this.lager = lager;
     }
 
     @Override
     public void run() {
         while (true) {
-            if(factory!=null&&lager!=null) {
-                try {
-                    Starvation.mut_arbeiten.acquire();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+            try {
+                StarvationMain.mut_arbeiten.acquire();
                 System.out.println("Consumer will Lager");
-                try {
-                    Starvation.mut_lagerSperre.acquire();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+                StarvationMain.mut_lagerSperre.acquire();
                 System.out.println("Consumer hat Lager");
-                try {
-                    Starvation.sem_itemsImLager.acquire();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                String item=lager.getItem();
-                System.out.println("Consumer: "+item);
+                StarvationMain.sem_itemsImLager.acquire();
+                String item = lager.getItem();
+                System.out.println("Consumer: " + item);
                 System.out.println(lager);
-                Starvation.sem_pufferImLager.release();
-                Starvation.mut_lagerSperre.release();
-
-                if(item!=null) {
+                StarvationMain.sem_pufferImLager.release();
+                StarvationMain.mut_lagerSperre.release();
+                if (item != null) {
                     System.out.println("Consumer will Fabrik");
-                    try {
-                        Starvation.mut_fabrikSperre.acquire();
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
+                    StarvationMain.mut_fabrikSperre.acquire();
                     System.out.println("Consumer hat Fabrik");
                     factory.consum(item);
-                    Starvation.mut_fabrikSperre.release();
-                    try {
-                        this.sleep(200);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    Starvation.mut_arbeiten.release();
+                    StarvationMain.mut_fabrikSperre.release();
+                    this.sleep(200);
                 }
+                StarvationMain.mut_arbeiten.release();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
+
         }
     }
 }
+

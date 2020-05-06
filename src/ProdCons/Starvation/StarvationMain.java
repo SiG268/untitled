@@ -2,7 +2,7 @@ package ProdCons.Starvation;
 
 import java.util.concurrent.Semaphore;
 
-public class Starvation {
+public class StarvationMain {
     final static int PUFFERSIZE = 10;
     public static Semaphore sem_itemsImLager = new Semaphore(0);
     public static Semaphore sem_pufferImLager = new Semaphore(PUFFERSIZE);
