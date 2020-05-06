@@ -23,7 +23,6 @@ public class Raucher extends Thread {
                     System.out.println("Raucherproblem.Dead.Raucher"+threadID+" legt ein Item zurück");
                     DeadMain.itemsOnTable.release();
                     itemPuffer=null;
-
                 }
                 table.putItem(item); //Legt Item auf den Tisch
                 System.out.println("Raucherproblem.Dead.Raucher"+threadID+" legt ein Item zurück");

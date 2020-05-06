@@ -4,11 +4,13 @@ import java.util.concurrent.Semaphore;
 
 public class StarvationSolvedNew {
 
+
     public static int sharedStorage = 0;
     public static int readCount = 0;
 
-    public static Semaphore mut_writeStorage = new Semaphore(1, true);
-    public static Semaphore mut_readCount = new Semaphore(1, true);
+    public static Semaphore mut_writeStorage = new Semaphore(1);
+    public static Semaphore mut_readCount = new Semaphore(1);
+    public static Semaphore mut_queue = new Semaphore(1,true);
 
 
     public static void main(String[] args) {

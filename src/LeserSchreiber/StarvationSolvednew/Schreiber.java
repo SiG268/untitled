@@ -1,5 +1,7 @@
 package LeserSchreiber.StarvationSolvednew;
 
+
+
 public class Schreiber extends Thread{
     int id;
     public Schreiber(int i) {
@@ -10,10 +12,10 @@ public class Schreiber extends Thread{
     public void run() {
         while (true) {
             try {
-
+                StarvationSolvedNew.mut_queue.acquire();
                 //Setze Sperre auf Storage
                 StarvationSolvedNew.mut_writeStorage.acquire();
-
+                StarvationSolvedNew.mut_queue.release();
                 //Schreibe
                 StarvationSolvedNew.sharedStorage ++;
                 int n = StarvationSolvedNew.sharedStorage;

@@ -12,7 +12,6 @@ public class Leser extends Thread {
     public void run() {
         while(true){
             try {
-                
                 DeadSolved.mut_arbeiten.acquire();
                 DeadSolved.ss1.acquire();
                 int n = DeadSolved.sharedStorage1;
@@ -22,7 +21,6 @@ public class Leser extends Thread {
                 DeadSolved.ss2.release();
                 DeadSolved.ss1.release();
                 sleep((int)(Math.random()*1000));
-
                 DeadSolved.mut_arbeiten.release();
 
             } catch (InterruptedException e) {

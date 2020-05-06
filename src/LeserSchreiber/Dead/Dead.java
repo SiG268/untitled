@@ -7,12 +7,10 @@ public class Dead {
 
     public static int sharedStorage1 = 0;
     public static int sharedStorage2 = 0;
-    public static int readCount = 0;
     public static Semaphore ss1 = new Semaphore(1);
     public static Semaphore ss2 = new Semaphore(1);
     public static Semaphore mut_arbeiten = new Semaphore(1);
-    public static Semaphore mut_readCount = new Semaphore(1);
-    //public static Semaphore mut_schreibe = new Semaphore(1);
+
 
     public static void main(String[] args) {
 
