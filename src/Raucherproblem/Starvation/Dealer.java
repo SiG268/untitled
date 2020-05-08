@@ -41,7 +41,7 @@ public class Dealer extends Thread{
     public void run() {
         while(true) {
             try {
-                StarvationMain.s.acquire();
+                StarvationMain.dealerSperre.acquire();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

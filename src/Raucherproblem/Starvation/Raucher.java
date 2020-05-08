@@ -1,25 +1,32 @@
 package Raucherproblem.Starvation;
 
 public class Raucher extends Thread {
-    String item=null;
-    String itemPuffer = null;
-    Table table=null;
-    String myItem = null;
+    String item;
+    String itemPuffer;
+    Table table;
+    String myItem;
     int threadID;
 
     public boolean validateItems() {
-        item = table.getItem(); //Irgend ein Item was auf dem Tisch liegt
-        System.out.println("Raucher"+threadID+" nimmt sich: "+ item);
+        //Hole ein Item von dem Tisch
+        item = table.getItem();
         if (item != null) {
+            //Raucher hat ein Item
+            System.out.println("Raucher"+threadID+" nimmt sich: "+ item);
+            //Überprüfung ob das genommene Item der unendlichen Ressource entspricht
             if (item.equals(myItem)) {
+                //Item entspricht der unendlichen Ressource
+                //Ist noch ein Item im Itempuffer?
                 if(itemPuffer!=null){
+                    //Lege Item im Itempuffer zurück auf den Tisch
                     table.putItem(itemPuffer);
-                    System.out.println("Raucherproblem.Dead.Raucher"+threadID+" legt ein Item zurück");
+                    System.out.println("Raucher"+threadID+" legt ein Item zurück");
                     itemPuffer=null;
 
                 }
+                //Lege genommenes Item zurück auf den Tisch
                 table.putItem(item); //Legt Item auf den Tisch
-                System.out.println("Raucherproblem.Dead.Raucher"+threadID+" legt ein Item zurück");
+                System.out.println("Raucher"+threadID+" legt ein Item zurück");
                 item=null;
                 return false;
             } else {
@@ -35,41 +42,45 @@ public class Raucher extends Thread {
         }
         return false;
     }
-
+    //Konstruktor
     public Raucher(Table table, String myItem, int threadID){
         this.table=table;
         this.myItem=myItem;
         this.threadID=threadID;
-
     }
 
     public void rauchen() {
+        //genommene Ressourcen verbrauchen
         item=null;
         itemPuffer=null;
-        System.out.println("Raucherproblem.Dead.Raucher "+threadID+" faengt an zu rauchen");
-        StarvationMain.s.release();
+        System.out.println("Raucher "+threadID+" faengt an zu rauchen");
+        //Dealer kann wieder neue Items hinlegen
+        StarvationMain.dealerSperre.release();
         try {
+            //Zeit zum rauchen
             this.sleep(10000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        System.out.println("Raucherproblem.Dead.Raucher "+threadID+" hoert auf zu rauchen");
+        System.out.println("Raucher "+threadID+" hoert auf zu rauchen");
     }
-
     @Override
     public void run() {
         while(true){
-            System.out.println("Raucherproblem.Dead.Raucher"+threadID+" will Items");
             try {
+                this.sleep(100);
+                System.out.println("Raucher"+threadID+" will Items");
+                //Sperre die Items für andere Threads
                 StarvationMain.itemsOnTable.acquire();
+                if(validateItems()) {
+                    rauchen();
+                }
+                else {
+                    //Gib die Items wieder frei
+                    StarvationMain.itemsOnTable.release();
+                }
             } catch (InterruptedException e) {
                 e.printStackTrace();
-            }
-            if(validateItems()) {
-                rauchen();
-           }
-            else {
-                StarvationMain.itemsOnTable.release();
             }
         }
     }

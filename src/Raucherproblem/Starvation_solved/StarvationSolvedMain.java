@@ -4,7 +4,7 @@ import java.util.concurrent.Semaphore;
 
 public class StarvationSolvedMain {
 
-    public static Semaphore s = new Semaphore(1);
+    public static Semaphore dealerSperre = new Semaphore(1);
     public static Semaphore itemsOnTable = new Semaphore(0);
 
     public static void main(String[] args) {

@@ -42,7 +42,7 @@ public class Dealer extends Thread{
     public void run() {
         while(true) {
             try {
-                DeadSolvedMain.s.acquire();
+                DeadSolvedMain.dealerSperre.acquire();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
