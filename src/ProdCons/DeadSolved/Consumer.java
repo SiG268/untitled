@@ -1,7 +1,5 @@
 package ProdCons.DeadSolved;
 
-import ProdCons.RaceConditionSolved.RaceSolvedMain;
-
 public class Consumer extends Thread {
     private Factory factory;
     private Puffer lager;
@@ -16,24 +14,37 @@ public class Consumer extends Thread {
         while (true) {
             if (factory != null && lager != null) {
                 try {
-                    DeadSolvedMain.mut_arbeiten.acquire();          //Will arbeiten
+                    //Versuche zu arbeiten
+                    DeadSolvedMain.mut_arbeiten.acquire();
+                    //Sperre das Lager
                     System.out.println("Consumer will Lager");
-                    RaceSolvedMain.mut_lagerSperre.acquire();
+                    DeadSolvedMain.mut_lagerSperre.acquire();
                     System.out.println("Consumer hat Lager");
-                    RaceSolvedMain.sem_itemsImLager.acquire();      //Überprüfung ob Items im Lager sind
+
+                    //Überprüfe ob Items im Lager sind
+                    DeadSolvedMain.sem_itemsImLager.acquire();
+
+                    //Hole Item aus dem Lager
                     String item = lager.getItem();
                     System.out.println("Consumer: " + item);
                     //System.out.println(lager);
-                    RaceSolvedMain.sem_pufferImLager.release();
-                    RaceSolvedMain.mut_lagerSperre.release();
+                    DeadSolvedMain.sem_pufferImLager.release();
+
+                    //Lager wieder freigeben
+                    DeadSolvedMain.mut_lagerSperre.release();
+
+                    //Nutze die Fabrik um das Item zu konsumieren
                     if (item != null) {
                         System.out.println("Consumer will Fabrik");
-                        RaceSolvedMain.mut_fabrikSperre.acquire();
+                        DeadSolvedMain.mut_fabrikSperre.acquire();
                         System.out.println("Consumer hat Fabrik");
                         factory.consum(item);
-                        RaceSolvedMain.mut_fabrikSperre.release();
-                        this.sleep(200);
+                        DeadSolvedMain.mut_fabrikSperre.release();
+
+                        //Zeit zum konsumieren (hier sehr niedrig-> die Häufigkeit des Auftreten der RaceCondition wird erhöhen)
+                        this.sleep(2);
                     }
+                    //Anderer Thread darf arbeiten
                     DeadSolvedMain.mut_arbeiten.release();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
