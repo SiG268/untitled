@@ -12,16 +12,23 @@ public class Leser extends Thread {
     public void run() {
         while(true){
             try {
-                DeadSolved.mut_arbeiten.acquire();
-                DeadSolved.ss1.acquire();
-                int n = DeadSolved.sharedStorage1;
+                DeadSolved.mut_queue.acquire();
+                //Setze Sperre auf Storage
+                DeadSolved.mut_readCount.acquire();
+                DeadSolved.readCount++;
+                if(DeadSolved.readCount==1) DeadSolved.mut_writeStorage.acquire();
+                DeadSolved.mut_queue.release();
+                DeadSolved.mut_readCount.release();
+
+                //Lese
+                int n = DeadSolved.sharedStorage;
                 System.out.println("Leser"+id+" liest: "+ n);
-                DeadSolved.ss2.acquire();
-                DeadSolved.sharedStorage2 = n;
-                DeadSolved.ss2.release();
-                DeadSolved.ss1.release();
                 sleep((int)(Math.random()*1000));
-                DeadSolved.mut_arbeiten.release();
+                //Löse Sperre auf Storage
+                DeadSolved.mut_readCount.acquire();
+                DeadSolved.readCount--;
+                if(DeadSolved.readCount==0) DeadSolved.mut_writeStorage.release();
+                DeadSolved.mut_readCount.release();
 
             } catch (InterruptedException e) {
                 e.printStackTrace();

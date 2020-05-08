@@ -14,8 +14,8 @@ public class StarvationSolved {
 
     public static Semaphore mut_writeStorage = new Semaphore(1);
     public static Semaphore mut_readCount = new Semaphore(1);
-    public static Semaphore mut_read = new Semaphore(1);
-    public static Semaphore mut_write = new Semaphore(1);
+    public static Semaphore mut_read = new Semaphore(1,true);
+    public static Semaphore mut_write = new Semaphore(1,true);
     public static Semaphore mut_wantread = new Semaphore(1);
     public static Semaphore mut_writeCount = new Semaphore(1);
     public static Semaphore mut_wantReadCount = new Semaphore(1);

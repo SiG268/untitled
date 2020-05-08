@@ -12,9 +12,10 @@ public class Leser extends Thread {
     public void run() {
         while(true){
             try {
-                StarvationSolvedNew.mut_queue.acquire();
+
                 //Setze Sperre auf Storage
                 StarvationSolvedNew.mut_readCount.acquire();
+                StarvationSolvedNew.mut_queue.acquire();
                 StarvationSolvedNew.readCount++;
                 if(StarvationSolvedNew.readCount==1) StarvationSolvedNew.mut_writeStorage.acquire();
                 StarvationSolvedNew.mut_queue.release();

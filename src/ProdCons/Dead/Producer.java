@@ -1,8 +1,5 @@
 package ProdCons.Dead;
 
-import LeserSchreiber.Dead.Dead;
-import ProdCons.RaceConditionSolved.RaceSolvedMain;
-
 public class Producer extends Thread {
     private Factory factory;
     private Puffer lager;

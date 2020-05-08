@@ -1,5 +1,6 @@
 package LeserSchreiber.DeadSolved;
 
+
 public class Schreiber extends Thread{
     int id;
     public Schreiber(int i) {
@@ -10,18 +11,19 @@ public class Schreiber extends Thread{
     public void run() {
         while (true) {
             try {
-
-                DeadSolved.mut_arbeiten.acquire();
-                DeadSolved.ss2.acquire();
-                int n = DeadSolved.sharedStorage2;
-                n++;
-                DeadSolved.ss1.acquire();
-                DeadSolved.sharedStorage1 = n;
-                DeadSolved.ss1.release();
-                DeadSolved.ss2.release();
+                DeadSolved.mut_queue.acquire();
+                //Setze Sperre auf Storage
+                DeadSolved.mut_writeStorage.acquire();
+                DeadSolved.mut_queue.release();
+                //Schreibe
+                DeadSolved.sharedStorage ++;
+                int n = DeadSolved.sharedStorage;
                 System.out.println("Schreiber"+id+" schreibt:" + n);
                 sleep((int)(Math.random()*1000));
-                DeadSolved.mut_arbeiten.release();
+
+                //Löse Sperre auf Storage
+                DeadSolved.mut_writeStorage.release();
+
 
             } catch (Exception e) {
                 e.printStackTrace();
