@@ -1,7 +1,6 @@
 package LeserSchreiber.DeadSolved;
 
 
-import LeserSchreiber.Dead.Dead;
 
 public class Leser extends Thread {
 
@@ -15,24 +14,24 @@ public class Leser extends Thread {
         while(true){
             try {
                 //Nehmen der warteschlange
-                Dead.mut_queue.acquire();
+                DeadSolved.mut_queue.acquire();
                 //Setze Sperre auf Storage
-                Dead.mut_readCount.acquire();
-                Dead.readCount++;
-                if(Dead.readCount==1) Dead.mut_writeStorage.acquire();
+                DeadSolved.mut_readCount.acquire();
+                DeadSolved.readCount++;
+                if(DeadSolved.readCount==1) DeadSolved.mut_writeStorage.acquire();
                 //Lasse Warteschlange los
-                Dead.mut_queue.release();
-                Dead.mut_readCount.release();
+                DeadSolved.mut_queue.release();
+                DeadSolved.mut_readCount.release();
 
                 //Lese
-                int n = Dead.sharedStorage;
+                int n = DeadSolved.sharedStorage;
                 System.out.println("Leser"+id+" liest: "+ n);
                 sleep((int)(Math.random()*1000));
                 //Löse Sperre auf Storage
-                Dead.mut_readCount.acquire();
-                Dead.readCount--;
-                if(Dead.readCount==0) Dead.mut_writeStorage.release();
-                Dead.mut_readCount.release();
+                DeadSolved.mut_readCount.acquire();
+                DeadSolved.readCount--;
+                if(DeadSolved.readCount==0) DeadSolved.mut_writeStorage.release();
+                DeadSolved.mut_readCount.release();
 
             } catch (InterruptedException e) {
                 e.printStackTrace();

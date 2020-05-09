@@ -1,7 +1,5 @@
 package LeserSchreiber.DeadSolved;
 
-import LeserSchreiber.RaceCondition.Leser;
-import LeserSchreiber.RaceCondition.Schreiber;
 
 import java.util.concurrent.Semaphore;
 
@@ -21,11 +19,11 @@ public class DeadSolved {
 
     public static void main(String[] args) {
         //Erstellung von Leser und Schreiber
-        LeserSchreiber.RaceCondition.Leser l1 = new LeserSchreiber.RaceCondition.Leser(1);
-        LeserSchreiber.RaceCondition.Leser l2 = new LeserSchreiber.RaceCondition.Leser(2);
-        LeserSchreiber.RaceCondition.Leser l3 = new Leser(3);
-        LeserSchreiber.RaceCondition.Schreiber s1 = new LeserSchreiber.RaceCondition.Schreiber(1);
-        LeserSchreiber.RaceCondition.Schreiber s2 = new Schreiber(2);
+        Leser l1 = new Leser(1);
+        Leser l2 = new Leser(2);
+        Leser l3 = new Leser(3);
+        Schreiber s1 = new Schreiber(1);
+        Schreiber s2 = new Schreiber(2);
         //Starten der Threads von Leser und Schreiber
         s1.start();
         s2.start();
