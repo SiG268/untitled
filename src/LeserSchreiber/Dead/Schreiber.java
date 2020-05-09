@@ -11,9 +11,11 @@ public class Schreiber extends Thread{
     public void run() {
         while (true) {
             try {
+                //Nehmen der Warteschlange
                 Dead.mut_queue.acquire();
                 //Setze Sperre auf Storage
                 Dead.mut_writeStorage.acquire();
+                //Lasse Warteschlange los
                 Dead.mut_queue.release();
                 //Schreibe
                 Dead.sharedStorage ++;

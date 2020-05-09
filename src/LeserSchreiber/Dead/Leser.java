@@ -15,9 +15,11 @@ public class Leser extends Thread {
 
                 //Setze Sperre auf Storage
                 Dead.mut_readCount.acquire();
+                //Nehmen der warteschlange
                 Dead.mut_queue.acquire();
                 Dead.readCount++;
                 if(Dead.readCount==1) Dead.mut_writeStorage.acquire();
+                //Lasse Warteschlange los
                 Dead.mut_queue.release();
                 Dead.mut_readCount.release();
 

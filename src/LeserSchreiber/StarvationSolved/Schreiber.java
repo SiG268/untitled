@@ -12,9 +12,11 @@ public class Schreiber extends Thread{
     public void run() {
         while (true) {
             try {
+                //Nehmen der Warteschlange
                 StarvationSolved.mut_queue.acquire();
                 //Setze Sperre auf Storage
                 StarvationSolved.mut_writeStorage.acquire();
+                //Lasse Warteschlange los
                 StarvationSolved.mut_queue.release();
                 //Schreibe
                 StarvationSolved.sharedStorage ++;
