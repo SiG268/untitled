@@ -1,11 +1,11 @@
 package Raucherproblem.Dead_solved;
 
 public class Dealer extends Thread{
-    Table table=null;
-    String item1=null;
-    String item2=null;
-    private String[] auswahl={"Streichholz","Papier","Tabak"};
+    Table table;
+    String item1;
+    String item2;
 
+    //Auswählen von zwei random Items
     public void randomItem(){
         int i=(int)(Math.random()*3);
         switch(i){
@@ -24,29 +24,31 @@ public class Dealer extends Thread{
         }
     }
 
+    //2 Neue Items auf den Tisch legen
     public void putItemsOnTable(){
         randomItem();
-        System.out.println("Raucherproblem.Dead.Dealer dealt: "+item1+", "+item2);
+        System.out.println("Dealer dealt: "+item1+", "+item2);
         table.putItem(item1);
         table.putItem(item2);
-        //Solved
+        //Item Semaphore wird nur ein mal releast statt für jedes Item
         DeadSolvedMain.itemsOnTable.release();
-
-
     }
 
+    //Konstruktor
     public Dealer(Table table){
         this.table=table;
     }
+
     @Override
     public void run() {
         while(true) {
             try {
+                //Versuche Items auf den Tisch zu legen
                 DeadSolvedMain.dealerSperre.acquire();
+                putItemsOnTable();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            putItemsOnTable();
         }
     }
 }
